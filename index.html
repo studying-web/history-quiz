@@ -9,21 +9,20 @@
 <style>
 body {
   margin: 0;
-  font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
-  font-size: 1.4em;
+  font-family: "Noto Sans JP","Yu Gothic",sans-serif;
   background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
   color: white;
-  min-height: 100vh;
 }
 
+/* ===== パスワード ===== */
 .container {
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.75);
   padding: 25px;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 0 30px cyan;
   max-width: 360px;
-  margin: 20px auto;
+  margin: 80px auto;
 }
 
 input, button {
@@ -37,13 +36,12 @@ input, button {
 button {
   margin-top: 15px;
   background: linear-gradient(45deg, gold, orange);
-  box-shadow: 0 0 10px gold;
 }
 
 #error { color:#ff6666; display:none; }
 #count { color:#ffcc66; }
 
-/* 成功画面 */
+/* ===== 成功 ===== */
 #success {
   display:none;
   position:fixed;
@@ -53,30 +51,44 @@ button {
   align-items:center;
   justify-content:center;
   flex-direction:column;
+  z-index:10;
 }
 
-/* 警察画面 */
+/* ===== 🚨 警察 ===== */
 #police {
   display:none;
   position:fixed;
   inset:0;
-  background:#200;
-  color:white;
+  background: radial-gradient(circle, #400000, #000);
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
+  z-index:20;
+  animation: flash 1s infinite;
 }
 
 .speech {
-  background:white;
-  color:black;
-  padding:15px;
-  border-radius:20px;
-  margin-bottom:10px;
+  background: white;
+  color: black;
+  padding: 20px 30px;
+  border-radius: 30px;
+  font-size: 1.6em;
+  margin-bottom: 30px;
 }
 
-/* クイズ */
+#timer {
+  font-size: 4em;
+  color: red;
+}
+
+@keyframes flash {
+  0% { background:#400000; }
+  50% { background:#800000; }
+  100% { background:#400000; }
+}
+
+/* ===== クイズ ===== */
 #quiz {
   display:none;
   padding:20px;
@@ -91,14 +103,13 @@ button {
 
 .choices button {
   display:block;
-  margin:5px auto;
+  margin:6px auto;
   background:#333;
   color:white;
 }
 
 .correct { background:green !important; }
 .wrong { background:red !important; }
-
 </style>
 </head>
 
@@ -118,15 +129,15 @@ button {
 
 <div id="police">
   <div class="speech">確保！👮‍♂️</div>
-  <h2 id="timer">5</h2>
+  <div id="timer">5</div>
 </div>
 
 <div id="quiz">
+<h2>📜 歴史クイズ</h2>
 
-<h2>📜 世紀クイズ</h2>
-
+<!-- 年号→世紀 -->
 <div class="question">
-<p>① 645年は何世紀？</p>
+<p>645年は何世紀？</p>
 <div class="choices">
 <button onclick="answer(this,true)">7世紀</button>
 <button onclick="answer(this,false)">6世紀</button>
@@ -136,17 +147,17 @@ button {
 </div>
 
 <div class="question">
-<p>② 1192年は何世紀？</p>
+<p>1192年は何世紀？</p>
 <div class="choices">
-<button onclick="answer(this,false)">11世紀</button>
 <button onclick="answer(this,true)">12世紀</button>
+<button onclick="answer(this,false)">11世紀</button>
 <button onclick="answer(this,false)">13世紀</button>
 <button onclick="answer(this,false)">10世紀</button>
 </div>
 </div>
 
 <div class="question">
-<p>③ 1600年は何世紀？</p>
+<p>1600年は何世紀？</p>
 <div class="choices">
 <button onclick="answer(this,true)">16世紀</button>
 <button onclick="answer(this,false)">15世紀</button>
@@ -156,160 +167,55 @@ button {
 </div>
 
 <div class="question">
-<p>④ 794年は何世紀？</p>
+<p>1868年は何世紀？</p>
 <div class="choices">
-<button onclick="answer(this,true)">8世紀</button>
-<button onclick="answer(this,false)">7世紀</button>
-<button onclick="answer(this,false)">9世紀</button>
-<button onclick="answer(this,false)">6世紀</button>
-</div>
-</div>
-
-<div class="question">
-<p>⑤ 1868年は何世紀？</p>
-<div class="choices">
-<button onclick="answer(this,false)">18世紀</button>
 <button onclick="answer(this,true)">19世紀</button>
+<button onclick="answer(this,false)">18世紀</button>
 <button onclick="answer(this,false)">20世紀</button>
 <button onclick="answer(this,false)">17世紀</button>
 </div>
 </div>
 
-<div class="question">
-<p>⑥ 2001年は何世紀？</p>
-<div class="choices">
-<button onclick="answer(this,true)">21世紀</button>
-<button onclick="answer(this,false)">20世紀</button>
-<button onclick="answer(this,false)">22世紀</button>
-<button onclick="answer(this,false)">19世紀</button>
-</div>
-</div>
-
-<h2>🧠 人類の進化</h2>
-
-<h3>🐒 猿人</h3>
+<!-- 人類誕生 -->
+<h2>🧬 人類の進化</h2>
 
 <div class="question">
 <p>猿人ができたことは？</p>
 <div class="choices">
 <button onclick="answer(this,true)">二足歩行</button>
-<button onclick="answer(this,false)">火の使用</button>
 <button onclick="answer(this,false)">農耕</button>
 <button onclick="answer(this,false)">文字</button>
+<button onclick="answer(this,false)">鉄器</button>
 </div>
 </div>
 
 <div class="question">
-<p>猿人の特徴は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">脳が小さい</button>
-<button onclick="answer(this,false)">言葉を使う</button>
-<button onclick="answer(this,false)">金属器</button>
-<button onclick="answer(this,false)">家を建てる</button>
-</div>
-</div>
-
-<div class="question">
-<p>猿人の生活は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">採集中心</button>
-<button onclick="answer(this,false)">農耕</button>
-<button onclick="answer(this,false)">牧畜</button>
-<button onclick="answer(this,false)">商業</button>
-</div>
-</div>
-
-<div class="question">
-<p>猿人の代表例は？</p>
+<p>猿人の代表は？</p>
 <div class="choices">
 <button onclick="answer(this,true)">アウストラロピテクス</button>
+<button onclick="answer(this,false)">ホモ・サピエンス</button>
 <button onclick="answer(this,false)">ネアンデルタール人</button>
-<button onclick="answer(this,false)">クロマニョン人</button>
 <button onclick="answer(this,false)">北京原人</button>
 </div>
 </div>
 
-<h3>🔥 原人</h3>
-
 <div class="question">
-<p>原人が使えたものは？</p>
+<p>原人が使い始めたものは？</p>
 <div class="choices">
 <button onclick="answer(this,true)">火</button>
-<button onclick="answer(this,false)">文字</button>
-<button onclick="answer(this,false)">農業</button>
-<button onclick="answer(this,false)">鉄</button>
-</div>
-</div>
-
-<div class="question">
-<p>原人の特徴は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">打製石器</button>
-<button onclick="answer(this,false)">磨製石器</button>
-<button onclick="answer(this,false)">青銅器</button>
+<button onclick="answer(this,false)">稲作</button>
 <button onclick="answer(this,false)">貨幣</button>
-</div>
-</div>
-
-<div class="question">
-<p>原人の代表は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">北京原人</button>
-<button onclick="answer(this,false)">猿人</button>
-<button onclick="answer(this,false)">新人</button>
-<button onclick="answer(this,false)">縄文人</button>
-</div>
-</div>
-
-<div class="question">
-<p>原人の生活は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">狩りと採集</button>
-<button onclick="answer(this,false)">農耕</button>
-<button onclick="answer(this,false)">商業</button>
-<button onclick="answer(this,false)">工業</button>
-</div>
-</div>
-
-<h3>🧑 新人</h3>
-
-<div class="question">
-<p>新人ができたことは？</p>
-<div class="choices">
-<button onclick="answer(this,true)">言葉</button>
-<button onclick="answer(this,false)">二足歩行</button>
-<button onclick="answer(this,false)">火の使用</button>
-<button onclick="answer(this,false)">直立歩行</button>
+<button onclick="answer(this,false)">仏教</button>
 </div>
 </div>
 
 <div class="question">
 <p>新人の特徴は？</p>
 <div class="choices">
-<button onclick="answer(this,true)">脳が発達</button>
-<button onclick="answer(this,false)">脳が小さい</button>
-<button onclick="answer(this,false)">道具なし</button>
-<button onclick="answer(this,false)">単独生活</button>
-</div>
-</div>
-
-<div class="question">
-<p>新人の代表は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">クロマニョン人</button>
-<button onclick="answer(this,false)">北京原人</button>
-<button onclick="answer(this,false)">猿人</button>
-<button onclick="answer(this,false)">原人</button>
-</div>
-</div>
-
-<div class="question">
-<p>新人の生活は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">協力して生活</button>
-<button onclick="answer(this,false)">単独</button>
-<button onclick="answer(this,false)">洞窟のみ</button>
-<button onclick="answer(this,false)">動物中心</button>
+<button onclick="answer(this,true)">言語や芸術</button>
+<button onclick="answer(this,false)">火の使用</button>
+<button onclick="answer(this,false)">二足歩行</button>
+<button onclick="answer(this,false)">打製石器</button>
 </div>
 </div>
 
@@ -319,7 +225,7 @@ button {
 let tries = 3;
 
 function check(){
-  if(pw.value==="tamanawa"){
+  if(pw.value === "tamanawa"){
     panel.style.display="none";
     success.style.display="flex";
     setTimeout(()=>{
@@ -338,19 +244,17 @@ function lock(){
   panel.style.display="none";
   police.style.display="flex";
   let t=5;
+  timer.textContent=t;
   const i=setInterval(()=>{
-    timer.textContent=t;
-    navigator.vibrate?.(300);
+    if(navigator.vibrate) navigator.vibrate(400);
     t--;
-    if(t<0){
-      clearInterval(i);
-      location.reload();
-    }
+    timer.textContent=t;
+    if(t<0){clearInterval(i);location.reload();}
   },1000);
 }
 
-function answer(btn,correct){
-  btn.classList.add(correct?"correct":"wrong");
+function answer(btn,ok){
+  btn.classList.add(ok?"correct":"wrong");
 }
 </script>
 

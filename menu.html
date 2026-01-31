@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>科目選択</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Noto Sans JP","Yu Gothic",sans-serif;
+  background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+}
+
+h1 {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  font-size: 2em;
+  text-shadow: 0 0 10px gold;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.menu button {
+  width: 100%;         /* 幅いっぱい */
+  max-width: 400px;    /* PC用に上限を設定 */
+  padding: 20px;       /* 高さ大きめ */
+  font-size: 1.5em;    /* 文字大きめ */
+  border-radius: 15px;
+  border: none;
+  background: linear-gradient(45deg, gold, orange);
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 0 10px gold;
+  transition: transform 0.2s;
+}
+
+.menu button:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<h1>📚 科目を選んでね</h1>
+
+<div class="menu">
+  <button onclick="location.href='Japanese.html'">🎌国語</button>
+   <button onclick="location.href='Math.html'">📈数量</button>
+  <button onclick="location.href='Figure.html'">📖図形</button>
+  <button onclick="location.href='EarthScience&Physics.html'"> 🗺️物理・地理</button>
+  <button onclick="location.href='science.html'"> 🧑‍🔬化学</button>
+  <button onclick="location.href='history.html'">📜 歴史</button>
+  <button onclick="location.href='English.html'">🗣️英語</button>
+</div>
+
+</body>
+</html>
+

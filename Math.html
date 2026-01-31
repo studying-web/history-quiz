@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>科目クイズ - 数学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Noto Sans JP","Yu Gothic",sans-serif;
+  background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+  color: white;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 2em;
+  text-shadow: 0 0 10px gold;
+}
+
+.container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.question {
+  background: rgba(0,0,0,0.7);
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.question p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.choices button {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(45deg, gold, orange);
+  cursor: pointer;
+  color: black;
+  transition: transform 0.2s;
+}
+
+.choices button:hover {
+  transform: scale(1.05);
+}
+
+.correct { background: green !important; color: white !important; }
+.wrong { background: red !important; color: white !important; }
+</style>
+</head>
+
+<body>
+
+<h1>📜 数学クイズ</h1>
+
+<div class="container">
+
+  <!-- 問題サンプル -->
+  <div class="question">
+    <p>645年は何世紀？</p>
+    <div class="choices">
+      <button onclick="answer(this,true)">7世紀</button>
+      <button onclick="answer(this,false)">6世紀</button>
+      <button onclick="answer(this,false)">8世紀</button>
+      <button onclick="answer(this,false)">5世紀</button>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>1192年は何世紀？</p>
+    <div class="choices">
+      <button onclick="answer(this,true)">12世紀</button>
+      <button onclick="answer(this,false)">11世紀</button>
+      <button onclick="answer(this,false)">13世紀</button>
+      <button onclick="answer(this,false)">10世紀</button>
+    </div>
+  </div>
+
+  <!-- ここに追加で問題を増やす -->
+
+</div>
+
+<script>
+function answer(btn,isCorrect){
+  btn.classList.add(isCorrect?"correct":"wrong");
+}
+</script>
+
+</body>
+</html>

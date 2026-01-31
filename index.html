@@ -120,6 +120,10 @@ button:hover {
   color: #ff9999;
 }
 
+#lock img {
+  animation: shake 0.4s infinite;
+}
+
 /* 🧠 クイズ画面 */
 #quiz {
   display: none;
@@ -164,8 +168,28 @@ button:hover {
 
 <div id="lock">
   <h2>🚫 ACCESS LOCKED 🚫</h2>
-  <p>試行回数を超えました</p>
+
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Japanese_police_officer.jpg"
+    alt="警察官"
+    style="
+      width: 200px;
+      margin-top: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px red;
+    "
+  >
+
+  <p style="font-size:1.5em; color: yellow; margin-top:15px;">
+    👮‍♂️ 確保！
+  </p>
+
+  <p id="unlockMsg">しばらくお待ちください…</p>
 </div>
+
+<audio id="siren" loop>
+  <source src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Police_siren_ambience.wav" type="audio/wav">
+</audio>
 
 <!-- 🧠 クイズ画面 -->
 <div id="quiz">
@@ -216,12 +240,30 @@ function check() {
 
 function lock() {
   document.getElementById("panel").style.display = "none";
-  document.getElementById("lock").style.display = "flex";
+  const lockScreen = document.getElementById("lock");
+  lockScreen.style.display = "flex";
+
+  const siren = document.getElementById("siren");
+  siren.currentTime = 0;
+  siren.play();
+
+  setTimeout(() => {
+    siren.pause();
+    siren.currentTime = 0;
+
+    lockScreen.style.display = "none";
+    document.getElementById("panel").style.display = "block";
+
+    tries = 3;
+    document.getElementById("count").textContent = "残り試行回数：3";
+    document.getElementById("error").style.display = "none";
+    document.getElementById("pw").value = "";
+
+    document.getElementById("unlockMsg").textContent =
+      "🔓 ロック解除。もう一度どうぞ。";
+  }, 10000);
 }
 </script>
 
 </body>
 </html>
-
-
-

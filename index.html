@@ -14,24 +14,26 @@ body {
   color: white;
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
+/* 共通ボックス */
 .container {
+  margin-top: 40px;
   background: rgba(0,0,0,0.75);
-  padding: 30px;
+  padding: 25px;
   border-radius: 20px;
-  text-align: center;
-  width: 90%;
-  max-width: 360px;
+  width: 95%;
+  max-width: 800px;
   box-shadow: 0 0 25px cyan;
+  text-align: center;
 }
 
 h1, h2 {
   text-shadow: 0 0 10px gold;
 }
 
+/* 入力 */
 input, button {
   width: 90%;
   font-size: 1.1em;
@@ -53,10 +55,9 @@ button {
 
 #count {
   color: #ffcc66;
-  margin-top: 5px;
 }
 
-/* 🚓 ロック画面 */
+/* 🚓 警察ロック画面 */
 #lock {
   display: none;
   position: fixed;
@@ -66,7 +67,6 @@ button {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  text-align: center;
 }
 
 .bubble {
@@ -103,25 +103,58 @@ button {
   color: yellow;
 }
 
-/* 🧠 クイズ画面 */
+/* 🧠 クイズ */
 #quiz {
   display: none;
-  padding: 20px;
-  max-width: 600px;
 }
 
-details {
-  background: rgba(0,0,0,0.5);
+.quiz-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.08);
   padding: 15px;
-  margin: 15px 0;
+  margin: 20px 0;
   border-radius: 15px;
+}
+
+.question {
+  font-size: 1.3em;
+  width: 45%;
+  min-width: 260px;
+}
+
+/* ヒント（4択） */
+.choices {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 50%;
+}
+
+.choice {
+  padding: 10px 15px;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #444, #222);
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+}
+
+.choice:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, gold, orange);
+  color: black;
+}
+
+.result {
+  width: 100%;
+  margin-top: 10px;
   font-size: 1.2em;
 }
 
-summary {
-  cursor: pointer;
-  font-size: 1.3em;
-}
+.correct { color: #66ff99; }
+.wrong   { color: #ff6666; }
 
 @keyframes pop {
   from { transform: scale(0.2); opacity: 0; }
@@ -140,7 +173,7 @@ summary {
 
 <body>
 
-<!-- 🔒 パスワード画面 -->
+<!-- 🔐 パスワード画面 -->
 <div class="container" id="panel">
   <h1>🔒 立入禁止</h1>
   <p>パスワードを入力してください</p>
@@ -158,33 +191,42 @@ summary {
 </div>
 
 <!-- 🧠 クイズ画面 -->
-<div id="quiz">
-  <h2>📜 年号 → 世紀クイズ</h2>
+<div class="container" id="quiz">
+  <h2>📜 年号 → 世紀クイズ（4択）</h2>
 
-  <details>
-    <summary><b>問1（レベル1）</b> 645年は何世紀？</summary>
-    👉 7世紀
-  </details>
+  <div class="quiz-item">
+    <div class="question">問1：645年は何世紀？</div>
+    <div class="choices">
+      <div class="choice" onclick="answer(this,false)">6世紀</div>
+      <div class="choice" onclick="answer(this,true)">7世紀</div>
+      <div class="choice" onclick="answer(this,false)">8世紀</div>
+      <div class="choice" onclick="answer(this,false)">9世紀</div>
+    </div>
+    <div class="result"></div>
+  </div>
 
-  <details>
-    <summary><b>問2（レベル2）</b> 1192年は何世紀？</summary>
-    👉 12世紀
-  </details>
+  <div class="quiz-item">
+    <div class="question">問2：1192年は何世紀？</div>
+    <div class="choices">
+      <div class="choice" onclick="answer(this,false)">10世紀</div>
+      <div class="choice" onclick="answer(this,false)">11世紀</div>
+      <div class="choice" onclick="answer(this,true)">12世紀</div>
+      <div class="choice" onclick="answer(this,false)">13世紀</div>
+    </div>
+    <div class="result"></div>
+  </div>
 
-  <details>
-    <summary><b>問3（レベル3）</b> 1600年は何世紀？</summary>
-    👉 16世紀
-  </details>
+  <div class="quiz-item">
+    <div class="question">問3：1600年は何世紀？</div>
+    <div class="choices">
+      <div class="choice" onclick="answer(this,true)">16世紀</div>
+      <div class="choice" onclick="answer(this,false)">15世紀</div>
+      <div class="choice" onclick="answer(this,false)">17世紀</div>
+      <div class="choice" onclick="answer(this,false)">18世紀</div>
+    </div>
+    <div class="result"></div>
+  </div>
 
-  <details>
-    <summary><b>問4（レベル4）</b> 1868年は何世紀？</summary>
-    👉 19世紀
-  </details>
-
-  <details>
-    <summary><b>問5（レベル5）</b> 2001年は何世紀？</summary>
-    👉 21世紀
-  </details>
 </div>
 
 <audio id="siren" loop>
@@ -221,9 +263,7 @@ function lock() {
   panel.style.display = "none";
   lockScreen.style.display = "flex";
 
-  if (navigator.vibrate) {
-    navigator.vibrate([300, 200, 300]);
-  }
+  if (navigator.vibrate) navigator.vibrate([300,200,300]);
 
   try { siren.play(); } catch(e) {}
 
@@ -249,6 +289,19 @@ function unlock() {
   count.textContent = "残り試行回数：3";
   error.style.display = "none";
   pw.value = "";
+}
+
+function answer(el, correct) {
+  const result = el.closest(".quiz-item").querySelector(".result");
+  if (result.textContent !== "") return;
+
+  if (correct) {
+    result.textContent = "⭕ 正解！";
+    result.className = "result correct";
+  } else {
+    result.textContent = "❌ 不正解";
+    result.className = "result wrong";
+  }
 }
 </script>
 

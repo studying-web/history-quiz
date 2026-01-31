@@ -9,7 +9,12 @@
 <style>
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
+  font-family:
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    "Meiryo",
+    "Noto Sans JP",
+    sans-serif;
   font-size: 1.5em;
   background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
   color: white;
@@ -125,19 +130,6 @@ button:hover {
   overflow-y: auto;
 }
 
-/* 紙吹雪 */
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  from { transform: translateY(-10vh) rotate(0deg); }
-  to { transform: translateY(110vh) rotate(720deg); }
-}
-
 @keyframes pop {
   0% { transform: scale(0.2); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
@@ -205,7 +197,6 @@ function check() {
     document.getElementById("panel").style.display = "none";
     const success = document.getElementById("success");
     success.style.display = "flex";
-    confetti();
 
     setTimeout(() => {
       success.style.display = "none";
@@ -226,18 +217,6 @@ function check() {
 function lock() {
   document.getElementById("panel").style.display = "none";
   document.getElementById("lock").style.display = "flex";
-}
-
-function confetti() {
-  for (let i = 0; i < 150; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
-    c.style.animationDuration = (Math.random()*2 + 2) + "s";
-    c.style.opacity = Math.random();
-    document.body.appendChild(c);
-  }
 }
 </script>
 

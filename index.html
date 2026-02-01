@@ -2,27 +2,31 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>秘密の入口</title>
+<title>中一三学期定期テスト試験範囲</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
 
 <style>
 body {
   margin: 0;
-  font-family: "Noto Sans JP","Yu Gothic",sans-serif;
+  font-family: "玉ねぎ楷書激無料版v7改","Yu Gothic",sans-serif;
   background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
   color: white;
+  min-height: 100vh;
 }
 
-/* ===== パスワード ===== */
 .container {
   background: rgba(0,0,0,0.75);
-  padding: 25px;
+  padding: 30px;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 0 30px cyan;
   max-width: 360px;
-  margin: 80px auto;
+  margin: 100px auto;
+}
+
+h1 {
+  margin-bottom: 15px;
 }
 
 input, button {
@@ -36,227 +40,53 @@ input, button {
 button {
   margin-top: 15px;
   background: linear-gradient(45deg, gold, orange);
+  cursor: pointer;
 }
 
-#error { color:#ff6666; display:none; }
-#count { color:#ffcc66; }
-
-/* ===== 成功 ===== */
-#success {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000428;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:10;
+#error {
+  margin-top: 10px;
+  color: #ff6666;
+  display: none;
 }
 
-/* ===== 🚨 警察 ===== */
-#police {
-  display:none;
-  position:fixed;
-  inset:0;
-  background: radial-gradient(circle, #400000, #000);
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:20;
-  animation: flash 1s infinite;
+#count {
+  margin-top: 5px;
+  color: #ffcc66;
 }
-
-.speech {
-  background: white;
-  color: black;
-  padding: 20px 30px;
-  border-radius: 30px;
-  font-size: 1.6em;
-  margin-bottom: 30px;
-}
-
-#timer {
-  font-size: 4em;
-  color: red;
-}
-
-@keyframes flash {
-  0% { background:#400000; }
-  50% { background:#800000; }
-  100% { background:#400000; }
-}
-
-/* ===== クイズ ===== */
-#quiz {
-  display:none;
-  padding:20px;
-}
-
-.question {
-  background:#111;
-  margin-bottom:20px;
-  padding:15px;
-  border-radius:15px;
-}
-
-.choices button {
-  display:block;
-  margin:6px auto;
-  background:#333;
-  color:white;
-}
-
-.correct { background:green !important; }
-.wrong { background:red !important; }
 </style>
 </head>
 
 <body>
 
 <div class="container" id="panel">
-  <h2>🔒 パスワード入力</h2>
-  <input id="pw" type="password">
+  <h1>🔒 パスワード入力</h1>
+  <input id="pw" type="password" placeholder="password">
   <button onclick="check()">ENTER</button>
   <div id="error">❌ パスワードが違います</div>
   <div id="count">残り：3</div>
 </div>
 
-<div id="success">
-  <h1>🎉 ようこそ！ 🎉</h1>
-</div>
-
-<div id="police">
-  <div class="speech">確保！👮‍♂️</div>
-  <div id="timer">5</div>
-</div>
-
-<div id="quiz">
-<h2>📜 歴史クイズ</h2>
-
-<!-- 年号→世紀 -->
-<div class="question">
-<p>645年は何世紀？</p>
-<div class="choices">
-<button onclick="answer(this,true)">7世紀</button>
-<button onclick="answer(this,false)">6世紀</button>
-<button onclick="answer(this,false)">8世紀</button>
-<button onclick="answer(this,false)">5世紀</button>
-</div>
-</div>
-
-<div class="question">
-<p>1192年は何世紀？</p>
-<div class="choices">
-<button onclick="answer(this,true)">12世紀</button>
-<button onclick="answer(this,false)">11世紀</button>
-<button onclick="answer(this,false)">13世紀</button>
-<button onclick="answer(this,false)">10世紀</button>
-</div>
-</div>
-
-<div class="question">
-<p>1600年は何世紀？</p>
-<div class="choices">
-<button onclick="answer(this,true)">16世紀</button>
-<button onclick="answer(this,false)">15世紀</button>
-<button onclick="answer(this,false)">17世紀</button>
-<button onclick="answer(this,false)">14世紀</button>
-</div>
-</div>
-
-<div class="question">
-<p>1868年は何世紀？</p>
-<div class="choices">
-<button onclick="answer(this,true)">19世紀</button>
-<button onclick="answer(this,false)">18世紀</button>
-<button onclick="answer(this,false)">20世紀</button>
-<button onclick="answer(this,false)">17世紀</button>
-</div>
-</div>
-
-<!-- 人類誕生 -->
-<h2>🧬 人類の進化</h2>
-
-<div class="question">
-<p>猿人ができたことは？</p>
-<div class="choices">
-<button onclick="answer(this,true)">二足歩行</button>
-<button onclick="answer(this,false)">農耕</button>
-<button onclick="answer(this,false)">文字</button>
-<button onclick="answer(this,false)">鉄器</button>
-</div>
-</div>
-
-<div class="question">
-<p>猿人の代表は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">アウストラロピテクス</button>
-<button onclick="answer(this,false)">ホモ・サピエンス</button>
-<button onclick="answer(this,false)">ネアンデルタール人</button>
-<button onclick="answer(this,false)">北京原人</button>
-</div>
-</div>
-
-<div class="question">
-<p>原人が使い始めたものは？</p>
-<div class="choices">
-<button onclick="answer(this,true)">火</button>
-<button onclick="answer(this,false)">稲作</button>
-<button onclick="answer(this,false)">貨幣</button>
-<button onclick="answer(this,false)">仏教</button>
-</div>
-</div>
-
-<div class="question">
-<p>新人の特徴は？</p>
-<div class="choices">
-<button onclick="answer(this,true)">言語や芸術</button>
-<button onclick="answer(this,false)">火の使用</button>
-<button onclick="answer(this,false)">二足歩行</button>
-<button onclick="answer(this,false)">打製石器</button>
-</div>
-</div>
-
-</div>
-
 <script>
 let tries = 3;
 
-function check(){
-  if(pw.value === "tamanawa"){
-    panel.style.display="none";
-    success.style.display="flex";
-    setTimeout(()=>{
-      success.style.display="none";
-      quiz.style.display="block";
-    },2000);
+function check() {
+  const pw = document.getElementById("pw").value;
+
+  if (pw === "tamanawa") {
+    // 正解 → 科目選択ページへ
+    location.href = "menu.html";
   } else {
     tries--;
-    error.style.display="block";
-    count.textContent="残り："+tries;
-    if(tries<=0) lock();
+    document.getElementById("error").style.display = "block";
+    document.getElementById("count").textContent = "残り：" + tries;
+
+    if (tries <= 0) {
+      alert("パスワード違うわボケ");
+      location.reload();
+    }
   }
-}
-
-function lock(){
-  panel.style.display="none";
-  police.style.display="flex";
-  let t=5;
-  timer.textContent=t;
-  const i=setInterval(()=>{
-    if(navigator.vibrate) navigator.vibrate(400);
-    t--;
-    timer.textContent=t;
-    if(t<0){clearInterval(i);location.reload();}
-  },1000);
-}
-
-function answer(btn,ok){
-  btn.classList.add(ok?"correct":"wrong");
 }
 </script>
 
 </body>
 </html>
-
-
